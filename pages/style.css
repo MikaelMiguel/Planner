@@ -1,0 +1,1024 @@
+/* ================================================================
+   PLANNER DO PROFESSOR — style.css
+   Metodologia BEM | Mobile-first | Estética Editorial Terrosa
+   ================================================================ */
+
+/* ──────────────────────────────────────────────────────────────
+   1. CUSTOM PROPERTIES (Design Tokens)
+   ────────────────────────────────────────────────────────────── */
+:root {
+  /* Paleta principal */
+  --c-bg:          #f4f1eb;        /* creme quente */
+  --c-surface:     #fdfcf9;        /* branco pergaminho */
+  --c-surface-2:   #f0ece3;        /* creme médio */
+  --c-border:      #ddd8ce;        /* borda suave */
+  --c-border-dark: #c5bfb3;
+
+  /* Verde principal */
+  --c-primary:     #3d6b52;
+  --c-primary-h:   #2f5340;
+  --c-primary-lt:  #d0e4d8;
+  --c-primary-xlt: #eaf3ee;
+
+  /* Âmbar/acento */
+  --c-accent:      #c07a3a;
+  --c-accent-lt:   #f5e4ce;
+  --c-accent-xlt:  #fdf4e7;
+
+  /* Vermelho suave */
+  --c-danger:      #b94040;
+  --c-danger-lt:   #fde8e8;
+
+  /* Texto */
+  --c-text:        #2a2520;
+  --c-text-2:      #5c5650;
+  --c-text-3:      #9a948a;
+
+  /* Tipografia */
+  --f-display: 'Lora', Georgia, serif;
+  --f-body:    'Outfit', system-ui, sans-serif;
+
+  /* Espaçamento */
+  --gap-xs:  4px;
+  --gap-sm:  8px;
+  --gap-md:  16px;
+  --gap-lg:  24px;
+  --gap-xl:  40px;
+
+  /* Bordas arredondadas */
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-xl:  28px;
+
+  /* Sombras */
+  --sh-sm:  0 1px 3px rgba(0,0,0,.07), 0 1px 2px rgba(0,0,0,.05);
+  --sh-md:  0 4px 16px rgba(0,0,0,.09), 0 1px 4px rgba(0,0,0,.05);
+  --sh-lg:  0 12px 40px rgba(0,0,0,.13), 0 4px 12px rgba(0,0,0,.07);
+
+  /* Transição */
+  --tr: .17s ease;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   2. RESET & BASE
+   ────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--f-body);
+  background-color: var(--c-bg);
+  color: var(--c-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(61,107,82,.08), transparent);
+}
+
+h1, h2, h3, h4 { line-height: 1.2; }
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   3. COMPONENTES COMUNS — Botões
+   ────────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 9px 20px;
+  border-radius: var(--r-sm);
+  font-weight: 500;
+  font-size: .87rem;
+  letter-spacing: .2px;
+  transition: background var(--tr), color var(--tr),
+              border-color var(--tr), transform var(--tr), box-shadow var(--tr);
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(.97); }
+
+/* Primário: verde */
+.btn--primary {
+  background: var(--c-primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(61,107,82,.3);
+}
+.btn--primary:hover {
+  background: var(--c-primary-h);
+  box-shadow: 0 4px 14px rgba(61,107,82,.35);
+}
+
+/* Acento: âmbar */
+.btn--accent {
+  background: var(--c-accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(192,122,58,.25);
+}
+.btn--accent:hover {
+  background: #a86930;
+  box-shadow: 0 4px 14px rgba(192,122,58,.3);
+}
+
+/* Ghost: sem fundo */
+.btn--ghost {
+  background: transparent;
+  color: var(--c-text-2);
+  border: 1.5px solid var(--c-border);
+}
+.btn--ghost:hover {
+  background: var(--c-surface-2);
+  border-color: var(--c-border-dark);
+}
+
+/* Danger */
+.btn--danger {
+  background: var(--c-danger-lt);
+  color: var(--c-danger);
+  border: 1px solid #f0c0c0;
+}
+.btn--danger:hover {
+  background: #fcd4d4;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   4. HEADER
+   ────────────────────────────────────────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+  box-shadow: var(--sh-sm);
+}
+
+.header__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-md);
+  flex-wrap: wrap;
+}
+
+/* Marca */
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header__logo {
+  width: 38px;
+  height: 38px;
+  background: var(--c-primary-lt);
+  border-radius: var(--r-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.header__brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.header__title {
+  font-family: var(--f-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--c-primary);
+}
+
+.header__subtitle {
+  font-size: .7rem;
+  font-weight: 400;
+  color: var(--c-text-3);
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+/* Navegação de mês */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+}
+
+.header__arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-border);
+  background: var(--c-surface-2);
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--c-text-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--tr), border-color var(--tr), color var(--tr);
+}
+.header__arrow:hover {
+  background: var(--c-primary-xlt);
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+}
+
+.header__month-display {
+  text-align: center;
+  min-width: 150px;
+}
+
+.header__month {
+  font-family: var(--f-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-text);
+  display: block;
+}
+
+.header__year {
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--c-text-3);
+  letter-spacing: 1.5px;
+}
+
+/* Ações */
+.header__actions {
+  display: flex;
+  gap: var(--gap-sm);
+  align-items: center;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   5. CALENDÁRIO — ESTRUTURA PRINCIPAL
+   ────────────────────────────────────────────────────────────── */
+.main {
+  max-width: 960px;
+  margin: 28px auto;
+  padding: 0 16px 60px;
+}
+
+/* Dias da semana */
+.calendar__weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: var(--gap-sm);
+}
+
+.calendar__weekdays span {
+  text-align: center;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+  padding: 6px 0;
+}
+
+/* Grade do calendário */
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   6. CÉLULA DE DIA (bloco BEM: .day)
+   ────────────────────────────────────────────────────────────── */
+.day {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 8px 7px 6px;
+  min-height: 90px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color var(--tr),
+    box-shadow var(--tr),
+    transform .15s ease;
+  /* Animação de entrada */
+  animation: fadeCell .25s ease both;
+}
+
+@keyframes fadeCell {
+  from { opacity: 0; transform: scale(.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.day:hover {
+  border-color: var(--c-primary);
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px) scale(1.01);
+  z-index: 1;
+}
+
+/* Dia de outro mês */
+.day--other-month {
+  opacity: .38;
+  pointer-events: none;
+  background: transparent;
+}
+
+/* Hoje */
+.day--today {
+  border-color: var(--c-primary);
+  background: var(--c-primary);
+  box-shadow: 0 4px 16px rgba(61,107,82,.3);
+}
+.day--today .day__number { color: #fff; }
+.day--today:hover { transform: translateY(-2px) scale(1.01); }
+
+/* Fim de semana */
+.day--weekend:not(.day--today) .day__number {
+  color: var(--c-accent);
+}
+
+/* Tem aulas */
+.day--has-lessons:not(.day--today) {
+  border-color: var(--c-primary-lt);
+  background: var(--c-primary-xlt);
+}
+
+/* Número do dia */
+.day__number {
+  font-family: var(--f-display);
+  font-size: .92rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* Badge de contagem de aulas */
+.day__badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--c-accent);
+  color: #fff;
+  border-radius: 9px;
+  font-size: .6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(.5);
+  transition: opacity var(--tr), transform var(--tr);
+}
+
+.day--has-lessons .day__badge {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.day--today .day__badge {
+  background: #fff;
+  color: var(--c-primary);
+}
+
+/* Preview das aulas dentro do dia */
+.day__previews {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+  overflow: hidden;
+}
+
+.day__preview-item {
+  font-size: .6rem;
+  font-weight: 500;
+  color: var(--c-primary);
+  background: var(--c-primary-lt);
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.6;
+}
+
+.day--today .day__preview-item {
+  background: rgba(255,255,255,.22);
+  color: rgba(255,255,255,.9);
+}
+
+.day__preview-more {
+  font-size: .57rem;
+  color: var(--c-text-3);
+  padding: 0 5px;
+}
+
+.day--today .day__preview-more {
+  color: rgba(255,255,255,.65);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   7. BARRA DE STATS DO MÊS
+   ────────────────────────────────────────────────────────────── */
+.calendar__stats {
+  margin-top: var(--gap-md);
+  padding: 14px 20px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  display: flex;
+  gap: var(--gap-xl);
+  align-items: center;
+  flex-wrap: wrap;
+  box-shadow: var(--sh-sm);
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stats__label {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--c-text-3);
+}
+
+.stats__value {
+  font-family: var(--f-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--c-primary);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   8. OVERLAY / MODAL — BASE
+   ────────────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30,25,20,.5);
+  backdrop-filter: blur(5px);
+  z-index: 500;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity .22s ease;
+  padding: 0;
+}
+
+.overlay[hidden] { display: none !important; }
+
+.overlay.is-open {
+  opacity: 1;
+}
+
+.overlay.is-open .modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+@media (min-width: 600px) {
+  .overlay { align-items: center; padding: 20px; }
+}
+
+/* Modal base */
+.modal {
+  background: var(--c-surface);
+  width: 100%;
+  max-height: 92vh;
+  overflow-y: auto;
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  padding: 24px 20px 36px;
+  box-shadow: var(--sh-lg);
+  transform: translateY(50px) scale(.97);
+  opacity: 0;
+  transition: transform .28s cubic-bezier(.34,1.4,.64,1), opacity .22s ease;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border) transparent;
+}
+
+@media (min-width: 600px) {
+  .modal {
+    border-radius: var(--r-xl);
+    padding: 28px 32px 36px;
+    transform: translateY(30px) scale(.96);
+  }
+}
+
+/* Modal do dia */
+.modal--day { max-width: 560px; }
+
+/* Modal de resumo */
+.modal--summary { max-width: 680px; }
+
+/* Cabeçalho do modal */
+.modal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-lg);
+}
+
+.modal__eyebrow {
+  font-size: .7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--c-text-3);
+  margin-bottom: 3px;
+}
+
+.modal__title {
+  font-family: var(--f-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+.modal__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--c-border);
+  background: var(--c-surface-2);
+  font-size: 1.4rem;
+  color: var(--c-text-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--tr), color var(--tr), border-color var(--tr);
+  line-height: 1;
+}
+.modal__close:hover {
+  background: var(--c-danger-lt);
+  color: var(--c-danger);
+  border-color: #f0c0c0;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   9. LISTA DE AULAS NO MODAL DO DIA
+   ────────────────────────────────────────────────────────────── */
+.modal__lessons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: var(--gap-lg);
+  min-height: 40px;
+}
+
+/* Estado vazio */
+.lessons__empty {
+  text-align: center;
+  padding: 28px 0 20px;
+  color: var(--c-text-3);
+}
+.lessons__empty-icon {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 8px;
+}
+.lessons__empty-text {
+  font-size: .88rem;
+}
+
+/* Card de aula */
+.lesson-card {
+  display: flex;
+  gap: var(--gap-md);
+  align-items: flex-start;
+  background: var(--c-bg);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  animation: slideIn .2s ease;
+  transition: box-shadow var(--tr), border-color var(--tr);
+}
+.lesson-card:hover {
+  box-shadow: var(--sh-sm);
+  border-color: var(--c-border-dark);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Coluna de tempo */
+.lesson-card__time {
+  font-family: var(--f-display);
+  font-size: .98rem;
+  font-weight: 700;
+  color: var(--c-primary);
+  min-width: 50px;
+  padding-top: 1px;
+  flex-shrink: 0;
+}
+
+/* Infos da aula */
+.lesson-card__body { flex: 1; min-width: 0; }
+
+.lesson-card__name {
+  font-weight: 600;
+  font-size: .93rem;
+  color: var(--c-text);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lesson-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: .78rem;
+  color: var(--c-text-3);
+}
+
+.lesson-card__school {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--c-accent-xlt);
+  color: var(--c-accent);
+  font-weight: 500;
+  padding: 1px 7px;
+  border-radius: 4px;
+}
+
+.lesson-card__notes {
+  font-style: italic;
+  color: var(--c-text-3);
+  font-size: .75rem;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* Ações do card */
+.lesson-card__actions {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.icon-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  font-size: .85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--tr), border-color var(--tr);
+}
+.icon-btn--edit:hover {
+  background: var(--c-primary-xlt);
+  border-color: var(--c-primary-lt);
+}
+.icon-btn--delete:hover {
+  background: var(--c-danger-lt);
+  border-color: #f0c0c0;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   10. FORMULÁRIO DE AULA
+   ────────────────────────────────────────────────────────────── */
+.modal__divider {
+  border: none;
+  border-top: 1px solid var(--c-border);
+  margin-bottom: var(--gap-lg);
+}
+
+.modal__form-wrap {
+  transition: background var(--tr), border var(--tr), padding var(--tr), border-radius var(--tr);
+}
+
+/* Modo edição: highlight âmbar */
+.modal__form-wrap.is-editing {
+  background: var(--c-accent-xlt);
+  border: 1.5px solid #e8b880;
+  border-radius: var(--r-md);
+  padding: 16px;
+}
+
+.modal__form-heading {
+  font-size: .9rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  margin-bottom: var(--gap-md);
+}
+
+.modal__form-wrap.is-editing .modal__form-heading {
+  color: var(--c-accent);
+}
+
+/* Grid do formulário */
+.form__row {
+  display: flex;
+  gap: var(--gap-md);
+  margin-bottom: var(--gap-md);
+}
+
+.form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.form__field--grow { flex: 2; }
+
+.form__label {
+  font-size: .72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--c-text-3);
+}
+
+.form__input,
+.form__textarea {
+  padding: 9px 12px;
+  border: 1.5px solid var(--c-border);
+  border-radius: var(--r-sm);
+  background: var(--c-surface);
+  color: var(--c-text);
+  transition: border-color var(--tr), box-shadow var(--tr), background var(--tr);
+  outline: none;
+  width: 100%;
+}
+
+.form__input:focus,
+.form__textarea:focus {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(61,107,82,.12);
+  background: #fff;
+}
+
+.form__input.is-error,
+.form__textarea.is-error {
+  border-color: var(--c-danger);
+  box-shadow: 0 0 0 3px rgba(185,64,64,.1);
+}
+
+.form__textarea {
+  resize: vertical;
+  min-height: 58px;
+  line-height: 1.5;
+}
+
+.form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   11. ABAS DO RESUMO
+   ────────────────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--c-surface-2);
+  border-radius: var(--r-sm);
+  padding: 4px;
+  margin-bottom: var(--gap-lg);
+}
+
+.tabs__tab {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: .85rem;
+  font-weight: 500;
+  color: var(--c-text-2);
+  transition: background var(--tr), color var(--tr), box-shadow var(--tr);
+  text-align: center;
+}
+
+.tabs__tab--active {
+  background: var(--c-surface);
+  color: var(--c-primary);
+  font-weight: 600;
+  box-shadow: var(--sh-sm);
+}
+
+.tabs__tab:not(.tabs__tab--active):hover {
+  background: rgba(255,255,255,.5);
+}
+
+/* ──────────────────────────────────────────────────────────────
+   12. CONTEÚDO DO RESUMO (agrupado por escola → dia → horário)
+   ────────────────────────────────────────────────────────────── */
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+}
+
+/* Estado vazio do resumo */
+.summary__empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--c-text-3);
+}
+.summary__empty-icon { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+/* Grupo por escola */
+.school-group {
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  animation: slideIn .2s ease;
+}
+
+.school-group__header {
+  background: var(--c-primary);
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.school-group__name {
+  font-family: var(--f-display);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.school-group__count {
+  font-size: .75rem;
+  background: rgba(255,255,255,.2);
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+
+/* Sub-grupo por dia */
+.day-group {
+  border-top: 1px solid var(--c-border);
+}
+.day-group:first-of-type { border-top: none; }
+
+.day-group__header {
+  background: var(--c-primary-xlt);
+  padding: 8px 16px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--c-primary);
+  letter-spacing: .3px;
+}
+
+/* Item de aula no resumo */
+.summary-lesson {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-md);
+  padding: 10px 16px;
+  border-top: 1px solid var(--c-border);
+  background: var(--c-surface);
+  transition: background var(--tr);
+}
+.summary-lesson:hover { background: var(--c-bg); }
+
+.summary-lesson__time {
+  font-family: var(--f-display);
+  font-size: .9rem;
+  font-weight: 700;
+  color: var(--c-primary);
+  min-width: 50px;
+  flex-shrink: 0;
+}
+
+.summary-lesson__info { flex: 1; min-width: 0; }
+
+.summary-lesson__name {
+  font-weight: 600;
+  font-size: .88rem;
+  margin-bottom: 2px;
+}
+
+.summary-lesson__notes {
+  font-size: .75rem;
+  color: var(--c-text-3);
+  font-style: italic;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   13. TOAST
+   ────────────────────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--c-text);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-size: .84rem;
+  font-weight: 500;
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s, transform .25s cubic-bezier(.34,1.4,.64,1);
+  white-space: nowrap;
+  box-shadow: var(--sh-md);
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast.is-visible {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast--success { background: var(--c-primary); }
+.toast--error   { background: var(--c-danger); }
+.toast--info    { background: var(--c-accent); }
+
+/* ──────────────────────────────────────────────────────────────
+   14. RESPONSIVIDADE
+   ────────────────────────────────────────────────────────────── */
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+  .header__brand { display: none; }
+  .header__inner { gap: 8px; }
+  .btn--ghost { display: none; } /* esconde btn Hoje em telas mini */
+
+  .day {
+    min-height: 64px;
+    padding: 6px 5px 4px;
+  }
+  .day__preview-item { display: none; }
+  .day__number { font-size: .8rem; }
+
+  .calendar__weekdays span { font-size: .6rem; letter-spacing: .5px; }
+
+  .form__row { flex-direction: column; }
+  .form__field--grow { flex: 1; }
+
+  .modal { padding: 20px 16px 32px; }
+  .modal__title { font-size: 1.2rem; }
+}
+
+/* Tablets */
+@media (min-width: 481px) and (max-width: 767px) {
+  .day { min-height: 80px; }
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+  .day { min-height: 100px; }
+}
+
+/* Scrollbar sutil */
+.modal::-webkit-scrollbar { width: 5px; }
+.modal::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: 4px;
+}

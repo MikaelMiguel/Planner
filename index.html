@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Planner do Professor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./pages/style.css" />
+  </head>
+  <body>
+    <!-- ╔══════════════════════════════════════╗
+       ║           HEADER / NAVEGAÇÃO         ║
+       ╚══════════════════════════════════════╝ -->
+    <header class="header">
+      <div class="header__inner">
+        <!-- Marca -->
+        <div class="header__brand">
+          <div class="header__logo">✏️</div>
+          <div class="header__brand-text">
+            <span class="header__title">Planner</span>
+            <span class="header__subtitle">do Professor</span>
+          </div>
+        </div>
+
+        <!-- Navegação de mês -->
+        <nav class="header__nav" aria-label="Navegação de meses">
+          <button class="header__arrow" id="btn-prev" aria-label="Mês anterior">
+            &#8249;
+          </button>
+          <div class="header__month-display">
+            <h2 class="header__month" id="current-month">Janeiro</h2>
+            <span class="header__year" id="current-year">2025</span>
+          </div>
+          <button class="header__arrow" id="btn-next" aria-label="Próximo mês">
+            &#8250;
+          </button>
+        </nav>
+
+        <!-- Ações globais -->
+        <div class="header__actions">
+          <button class="btn btn--ghost" id="btn-today">Hoje</button>
+          <button class="btn btn--accent" id="btn-summary">
+            📊 Ver Resumo
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ╔══════════════════════════════════════╗
+       ║            CALENDÁRIO PRINCIPAL      ║
+       ╚══════════════════════════════════════╝ -->
+    <main class="main" id="main-content">
+      <!-- Cabeçalho dos dias da semana -->
+      <div class="calendar__weekdays" role="row">
+        <span role="columnheader">Dom</span>
+        <span role="columnheader">Seg</span>
+        <span role="columnheader">Ter</span>
+        <span role="columnheader">Qua</span>
+        <span role="columnheader">Qui</span>
+        <span role="columnheader">Sex</span>
+        <span role="columnheader">Sáb</span>
+      </div>
+
+      <!-- Grade dos dias — preenchida via JS -->
+      <div class="calendar__grid" id="calendar-grid" role="grid"></div>
+
+      <!-- Barra de resumo do mês -->
+      <div class="calendar__stats" id="calendar-stats"></div>
+    </main>
+
+    <!-- ╔══════════════════════════════════════╗
+       ║         MODAL — DIA INDIVIDUAL       ║
+       ╚══════════════════════════════════════╝ -->
+    <div
+      class="overlay"
+      id="day-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-day-title"
+      hidden
+    >
+      <div class="modal modal--day">
+        <!-- Cabeçalho do modal -->
+        <div class="modal__header">
+          <div class="modal__header-info">
+            <p class="modal__eyebrow">Aulas do dia</p>
+            <h3 class="modal__title" id="modal-day-title"></h3>
+          </div>
+          <button class="modal__close" id="day-modal-close" aria-label="Fechar">
+            &times;
+          </button>
+        </div>
+
+        <!-- Lista de aulas cadastradas -->
+        <section
+          class="modal__lessons"
+          id="day-lessons"
+          aria-label="Aulas do dia"
+        ></section>
+
+        <!-- Divisor -->
+        <hr class="modal__divider" />
+
+        <!-- Formulário de cadastro / edição -->
+        <section class="modal__form-wrap" id="form-section">
+          <h4 class="modal__form-heading" id="form-heading">+ Nova Aula</h4>
+
+          <form class="form" id="lesson-form" novalidate>
+            <!-- Campo oculto para identificar modo edição -->
+            <input type="hidden" id="edit-id" value="" />
+
+            <div class="form__row">
+              <!-- Horário -->
+              <div class="form__field">
+                <label class="form__label" for="f-time">Horário</label>
+                <input class="form__input" type="time" id="f-time" required />
+              </div>
+              <!-- Nome da aula -->
+              <div class="form__field form__field--grow">
+                <label class="form__label" for="f-name">Nome da Aula</label>
+                <input
+                  class="form__input"
+                  type="text"
+                  id="f-name"
+                  placeholder="Ex: Matemática 7º A"
+                  required
+                />
+              </div>
+            </div>
+
+            <!-- Escola / local -->
+            <div class="form__field">
+              <label class="form__label" for="f-school">Escola / Local</label>
+              <input
+                class="form__input"
+                type="text"
+                id="f-school"
+                placeholder="Ex: Escola Estadual Vila Nova, Online…"
+              />
+            </div>
+
+            <!-- Observações -->
+            <div class="form__field">
+              <label class="form__label" for="f-notes">Observações</label>
+              <textarea
+                class="form__textarea"
+                id="f-notes"
+                rows="2"
+                placeholder="Conteúdo, materiais, lembretes..."
+              ></textarea>
+            </div>
+
+            <div class="form__actions">
+              <button type="button" class="btn btn--ghost" id="form-cancel">
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn--primary" id="form-submit">
+                Salvar
+              </button>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <!-- ╔══════════════════════════════════════╗
+       ║        MODAL — RESUMO SEMANAL/MENSAL ║
+       ╚══════════════════════════════════════╝ -->
+    <div
+      class="overlay"
+      id="summary-overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="summary-title"
+      hidden
+    >
+      <div class="modal modal--summary">
+        <div class="modal__header">
+          <div class="modal__header-info">
+            <p class="modal__eyebrow">Visualização</p>
+            <h3 class="modal__title" id="summary-title">Resumo</h3>
+          </div>
+          <button
+            class="modal__close"
+            id="summary-modal-close"
+            aria-label="Fechar"
+          >
+            &times;
+          </button>
+        </div>
+
+        <!-- Abas: Semana / Mês -->
+        <div class="tabs" role="tablist" aria-label="Período do resumo">
+          <button
+            class="tabs__tab tabs__tab--active"
+            role="tab"
+            data-tab="week"
+            id="tab-week"
+            aria-selected="true"
+          >
+            Esta Semana
+          </button>
+          <button
+            class="tabs__tab"
+            role="tab"
+            data-tab="month"
+            id="tab-month"
+            aria-selected="false"
+          >
+            Este Mês
+          </button>
+        </div>
+
+        <!-- Conteúdo do resumo — preenchido via JS -->
+        <div class="summary-content" id="summary-content"></div>
+      </div>
+    </div>
+
+    <!-- ╔══════════════════════════════════════╗
+       ║              TOAST                   ║
+       ╚══════════════════════════════════════╝ -->
+    <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+    <script src="./scripts/app.js"></script>
+  </body>
+</html>
